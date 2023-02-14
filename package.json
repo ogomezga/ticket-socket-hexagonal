@@ -1,0 +1,26 @@
+{
+  "name": "ticket-socket-hexagonal",
+  "version": "1.0.0",
+  "description": "Websocket application that enables a ticketing system for waiting rooms.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test-coverage": "jest --coverage",
+    "lst": "jest -t",
+    "lint": "eslint . --fix"
+  },
+  "author": "@ogomezga",
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.30.6",
+    "@typescript-eslint/parser": "^5.30.6",
+    "eslint": "^8.19.0",
+    "jest": "^28.1.3",
+    "ts-jest": "^28.0.7",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "awilix": "^7.0.3",
+    "express": "^4.18.1"
+  }
+}
