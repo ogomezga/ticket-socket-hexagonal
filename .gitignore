@@ -1,0 +1,19 @@
+# Coverage directoy
+./coverage
+
+# Dependency directory
+/node_modules/*
+
+# Build directory
+/dist/*
+
+# IDE
+.idea/
+.idea/*
+.vscode/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
