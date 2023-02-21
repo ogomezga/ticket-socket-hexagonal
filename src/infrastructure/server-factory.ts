@@ -2,20 +2,18 @@ import express from 'express';
 import * as http from 'http';
 
 export class ServerFactory {
-    private readonly port: string;
+    private readonly port: number;
     private expressServer: express;
 
-    constructor({ port }: { port: string}) {
+    constructor({ port }: { port: number}) {
         this.port = port;
     }
 
     public async createServer() {
         this.expressServer = express();
-
-        await this.start(this.expressServer);
     }
 
-    public getConfig(): string {
+    public getConfig(): number {
         return this.port;
     };
 
@@ -23,9 +21,9 @@ export class ServerFactory {
         return this.expressServer;
     }
 
-    private async start(expressServer: express) {
+    public async start() {
         let httpConnection: http.Server;
-        const serverWillStart = new Promise<void>((resolve) => (httpConnection = expressServer.listen(this.port, () => resolve())));
+        const serverWillStart = new Promise<void>((resolve) => (httpConnection = this.expressServer.listen(this.port, () => resolve())));
         await Promise.all([serverWillStart]);
     };
 }
