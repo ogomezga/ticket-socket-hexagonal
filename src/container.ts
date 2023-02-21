@@ -1,4 +1,4 @@
-import { AwilixContainer, createContainer } from "awilix";
+import { AwilixContainer, createContainer } from 'awilix';
 
 let container: AwilixContainer;
 

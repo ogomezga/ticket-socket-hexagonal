@@ -1,4 +1,4 @@
-import { ServerFactory } from "./infrastructure/server-factory"
+import { ServerFactory } from './infrastructure/server-factory';
 
 const serverFactory = new ServerFactory({ port: 3000});
 

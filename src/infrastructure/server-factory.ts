@@ -15,7 +15,7 @@ export class ServerFactory {
 
     public getConfig(): number {
         return this.port;
-    };
+    }
 
     public getExpressApp(): express {
         return this.expressServer;
@@ -25,5 +25,5 @@ export class ServerFactory {
         let httpConnection: http.Server;
         const serverWillStart = new Promise<void>((resolve) => (httpConnection = this.expressServer.listen(this.port, () => resolve())));
         await Promise.all([serverWillStart]);
-    };
+    }
 }
