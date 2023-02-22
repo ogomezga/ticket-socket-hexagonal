@@ -1,6 +1,8 @@
 import { ServerFactory } from './infrastructure/server-factory';
+import * as dotenv from 'dotenv';
 
-const serverFactory = new ServerFactory({ port: 3000});
+dotenv.config();
+const serverFactory = new ServerFactory({ port: process.env.PORT});
 
 serverFactory
 .createServer()
