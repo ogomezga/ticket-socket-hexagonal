@@ -2,10 +2,10 @@ import express from 'express';
 import * as http from 'http';
 
 export class ServerFactory {
-    private readonly port: number;
+    private readonly port: string;
     private expressServer: express;
 
-    constructor({ port }: { port: number}) {
+    constructor({ port }: { port: string}) {
         this.port = port;
     }
 
@@ -13,7 +13,7 @@ export class ServerFactory {
         this.expressServer = express();
     }
 
-    public getConfig(): number {
+    public getConfig(): string {
         return this.port;
     }
 
