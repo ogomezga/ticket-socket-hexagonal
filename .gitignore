@@ -5,7 +5,7 @@
 .LSOverride
 
 # Coverage directoy
-./coverage
+/coverage
 
 # Dependency directory
 /node_modules/*
