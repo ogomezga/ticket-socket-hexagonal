@@ -1,29 +1,30 @@
 import express from 'express';
-import * as http from 'http';
+import { Server } from 'http';
 
 export class ServerFactory {
     private readonly port: string;
     private expressServer: express;
+    private httpConnection: Server;
 
     constructor({ port }: { port: string}) {
         this.port = port;
     }
 
-    public async createServer() {
+    public async createServer(): Promise<void> {
         this.expressServer = express();
+        this.expressServer.use( express.static('public'));
     }
 
-    public getConfig(): string {
+    public getPort(): string {
         return this.port;
     }
 
-    public getExpressApp(): express {
-        return this.expressServer;
+    public async start(): Promise<void> {
+        const serverWillStart = new Promise((resolve) => (this.httpConnection = this.expressServer.listen(this.port, () => resolve(null))));
+        await Promise.all([serverWillStart]);
     }
 
-    public async start() {
-        let httpConnection: http.Server;
-        const serverWillStart = new Promise<void>((resolve) => (httpConnection = this.expressServer.listen(this.port, () => resolve())));
-        await Promise.all([serverWillStart]);
+    public async stop(): Promise<void> {
+        this.httpConnection.close();
     }
 }
