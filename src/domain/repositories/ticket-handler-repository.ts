@@ -1,8 +1,8 @@
 import { Ticket } from '../ticket';
 
-type TicketHandlerInfo = {
+export type TicketHandlerInfo = {
     latestTicket: number;
-    today: Date;
+    today: number;
     tickets: Ticket[];
     lastFourTickets: Ticket[];
 };
