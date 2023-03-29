@@ -1,4 +1,4 @@
-export type Ticket = {
-    numero: number;
-    escritorio: number;
-};
+export interface Ticket {
+    numb: number;
+    desk: number;
+}
