@@ -28,7 +28,7 @@ export class TicketRepository implements TicketHandler {
         this.init();
     }
 
-    toJson(): TicketHandlerInfo {
+    public toJson(): TicketHandlerInfo {
         return {
             latestTicket: this.latestTicket,
             today: this.today,
@@ -37,7 +37,7 @@ export class TicketRepository implements TicketHandler {
         };
     }
 
-    init(): void {
+    public init(): void {
         const data: Database = JSON.parse(JSON.stringify(fs.readFileSync(DB_PATH, 'utf8')));
 
         if ( data.today === this.today ) {
@@ -49,11 +49,11 @@ export class TicketRepository implements TicketHandler {
         }
     }
 
-    saveCurrentTicketHandlerInformation(): void {
+    public saveCurrentTicketHandlerInformation(): void {
         fs.writeFileSync(DB_PATH, JSON.stringify( this.toJson() ) );
     }
 
-    addNewTicket(): Ticket {
+    public addNewTicket(): Ticket {
         this.latestTicket += 1 ;
 
         const newTicket: Ticket = {
