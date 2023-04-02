@@ -1,21 +1,7 @@
-import { Ticket } from '../ticket';
-
-export type TicketHandlerInfo = {
-    latestTicket: number;
-    today: number;
-    tickets: Ticket[];
-    lastFourTickets: Ticket[];
-};
+import { TicketHandlerInfo } from '../models/ticket-handler-info';
 
 export interface TicketHandler {
+    saveCurrentTicketHandlerInformation(ticketHandlerInfo: TicketHandlerInfo): void;
 
-    toJson(): TicketHandlerInfo;
-
-    init(): void;
-
-    saveCurrentTicketHandlerInformation(): void;
-
-    addNewTicket(): Ticket;
-
-    assingTicket(desktop: number): Ticket;
+    readCurrentTicketHandlerInformation(): TicketHandlerInfo;
 }
