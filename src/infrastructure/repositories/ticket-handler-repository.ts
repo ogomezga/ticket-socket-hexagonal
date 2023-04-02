@@ -1,58 +1,51 @@
 import path from 'path';
 import fs from 'fs';
 
-import { TicketHandler, TicketHandlerInfo } from '../../domain/repositories/ticket-handler-repository';
-import { Ticket } from '../../domain/ticket';
+import { TicketHandler } from '../../domain/repositories/ticket-handler-repository';
+import { TicketHandlerInfo } from '../../domain/models/ticket-handler-info';
 
 const DB_PATH = path.join(__dirname, '../../../db/data.json');
 
-type Database = {
-    latestTicket: number;
-    today: number;
-    tickets: Ticket[];
-    lastFourTickets: Ticket[];
-};
-
 export class TicketRepository implements TicketHandler {
-    private latestTicket: number;
-    private today: number;
-    private tickets: Ticket[];
-    private lastFourTickets: Ticket[];
+    private ticketHandlerInfo: TicketHandlerInfo;
 
     constructor() {
-        this.latestTicket = 0;
-        this.today = new Date().getDate();
-        this.tickets = [];
-        this.lastFourTickets = [];
+        this.ticketHandlerInfo = new TicketHandlerInfo({
+            latestTicket: 0,
+            today: new Date().getDate(),
+            tickets: [],
+            lastFourTickets: [],
+        });
 
         this.init();
     }
 
-    public toJson(): TicketHandlerInfo {
-        return {
-            latestTicket: this.latestTicket,
-            today: this.today,
-            tickets: this.tickets,
-            lastFourTickets: this.lastFourTickets,
-        };
+    public saveCurrentTicketHandlerInformation(ticketHandlerInfo: TicketHandlerInfo): void {
+        fs.writeFileSync(DB_PATH, JSON.stringify( ticketHandlerInfo ) );
     }
 
-    public init(): void {
-        const data: Database = JSON.parse(JSON.stringify(fs.readFileSync(DB_PATH, 'utf8')));
+    public readCurrentTicketHandlerInformation(): TicketHandlerInfo {
+        return JSON.parse(JSON.stringify(fs.readFileSync(DB_PATH, 'utf8')));
+    }
 
-        if ( data.today === this.today ) {
-            this.tickets  = data.tickets;
-            this.latestTicket   = data.latestTicket;
-            this.lastFourTickets = data.lastFourTickets;
+    private init(): void {
+        const data: TicketHandlerInfo = this.readCurrentTicketHandlerInformation();
+
+        if ( data.today === this.ticketHandlerInfo.today ) {
+            this.ticketHandlerInfo = new TicketHandlerInfo({
+                latestTicket: data.latestTicket,
+                today: data.today,
+                tickets: data.tickets,
+                lastFourTickets: data.lastFourTickets,
+            });
         } else {                                // es otro día por lo que reinicio mi db.
-            this.saveCurrentTicketHandlerInformation();
+            this.saveCurrentTicketHandlerInformation(this.ticketHandlerInfo);
         }
     }
+}
 
-    public saveCurrentTicketHandlerInformation(): void {
-        fs.writeFileSync(DB_PATH, JSON.stringify( this.toJson() ) );
-    }
-
+/*
+// TODO tal vez, esto debería estar en un caso de uso?
     public addNewTicket(): Ticket {
         this.latestTicket += 1 ;
 
@@ -66,6 +59,7 @@ export class TicketRepository implements TicketHandler {
         return newTicket;
     }
 
+    // TODO sacar esto a un caso de uso
     assingTicket( desktop: number ){
 
         if ( this.tickets.length === 0 ) {
@@ -84,4 +78,4 @@ export class TicketRepository implements TicketHandler {
         this.saveCurrentTicketHandlerInformation();
         return ticket;
     }
-}
+*/
