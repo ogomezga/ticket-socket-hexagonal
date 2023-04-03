@@ -2,7 +2,6 @@ import { Ticket } from '../../../domain/models/ticket';
 import { TicketHandlerInfo } from '../../../domain/models/ticket-handler-info';
 import { AssignTicket } from '../../../domain/usecases/assign-ticket';
 import { TicketRepositoryMock } from '../../helpers/ticket-handler-repository-mock';
-import fs from 'fs';
 
 jest.mock('fs');
 
