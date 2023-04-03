@@ -1,7 +1,7 @@
-import { TicketHandler } from '../../domain/repositories/ticket-handler-repository';
+import TicketHandlerRepositoryInterface from '../../domain/repositories/ticket-handler-repository-interface';
 import { TicketHandlerInfo } from '../../domain/models/ticket-handler-info';
 
-export class TicketRepositoryMock implements TicketHandler {
+export class TicketRepositoryMock implements TicketHandlerRepositoryInterface {
     private ticketHandlerInfo: TicketHandlerInfo;
     private writeFileSync = jest.fn();
     private dbConnectionPath = 'D:\\Developer\\ProyectosNode\\ticket-socket-hexagonal\\db\\data.json';

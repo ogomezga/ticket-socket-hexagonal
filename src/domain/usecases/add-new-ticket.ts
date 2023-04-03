@@ -1,11 +1,11 @@
 import { Ticket } from '../models/ticket';
-import { TicketHandler } from '../repositories/ticket-handler-repository';
+import TicketHandlerRepositoryInterface from '../repositories/ticket-handler-repository-interface';
 import { TicketHandlerInfo } from '../models/ticket-handler-info';
 
 export class AddNewTicket {
-    private ticketHandlerRepository: TicketHandler;
+    private ticketHandlerRepository: TicketHandlerRepositoryInterface;
 
-    constructor( ticketHandlerRepository: TicketHandler ) {
+    constructor( ticketHandlerRepository: TicketHandlerRepositoryInterface ) {
         this.ticketHandlerRepository = ticketHandlerRepository;
     }
 

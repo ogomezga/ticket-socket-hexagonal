@@ -1,6 +1,6 @@
 import { TicketHandlerInfo } from '../models/ticket-handler-info';
 
-export interface TicketHandler {
+export default interface TicketHandlerRepositoryInterface {
     saveCurrentTicketHandlerInformation(ticketHandlerInfo: TicketHandlerInfo): void;
 
     readCurrentTicketHandlerInformation(): TicketHandlerInfo;
