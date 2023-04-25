@@ -10,7 +10,8 @@ export class AddNewTicket {
     }
 
     public addNewTicket(): Ticket {
-        const ticketHandlerInfo: TicketHandlerInfo = this.ticketHandlerRepository.readCurrentTicketHandlerInformation().increaseLatestTicket();
+        let ticketHandlerInfo: TicketHandlerInfo = this.ticketHandlerRepository.readCurrentTicketHandlerInformation();
+        ticketHandlerInfo = ticketHandlerInfo.increaseLatestTicket();
 
         const newTicket: Ticket = {
             numb: ticketHandlerInfo.latestTicket,
