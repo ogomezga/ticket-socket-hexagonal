@@ -33,7 +33,7 @@ describe('Assign Ticket test suite', () => {
         const assignTicket = new AssignTicket(ticketRepository);
 
         // When
-        const assignedTicket = assignTicket.assignTicket(1);
+        const assignedTicket = assignTicket.execute(1);
 
         // Then
         const expectedAssignedTicket: Ticket = {
@@ -49,7 +49,7 @@ describe('Assign Ticket test suite', () => {
         const assignTicket = new AssignTicket(ticketRepository);
 
         // When
-        const assignedTicket = assignTicket.assignTicket(1);
+        const assignedTicket = assignTicket.execute(1);
 
         // Then
         expect(assignedTicket).toBeNull();
@@ -70,7 +70,7 @@ describe('Assign Ticket test suite', () => {
         const assignTicket = new AssignTicket(ticketRepository);
 
         // When
-        assignTicket.assignTicket(1);
+        assignTicket.execute(1);
 
         // Then
         const ticket = {
@@ -118,7 +118,7 @@ describe('Assign Ticket test suite', () => {
         const assignTicket = new AssignTicket(ticketRepository);
 
         // When
-        assignTicket.assignTicket(1);
+        assignTicket.execute(1);
 
         // Then
         const expectedSavedTicketHandlerInfo = new TicketHandlerInfo({

@@ -9,7 +9,7 @@ export class AssignTicket {
         this.ticketHandlerRepository = ticketHandlerRepository;
     }
 
-    public assignTicket( desktop: number ): Ticket {
+    public execute(desktop: number ): Ticket {
         const ticketHandlerInfo: TicketHandlerInfo = this.ticketHandlerRepository.readCurrentTicketHandlerInformation();
 
         if ( !ticketHandlerInfo.isThereTicketToAttend() ) {
@@ -25,11 +25,3 @@ export class AssignTicket {
         return ticket;
     }
 }
-
-
-/*
-assingTicket( desktop: number ){
-
-
-    }
-*/
