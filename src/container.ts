@@ -1,8 +1,18 @@
-import { AwilixContainer, BuildResolver, Constructor, DisposableResolver, Lifetime, asClass, createContainer } from 'awilix';
+import {
+    AwilixContainer,
+    BuildResolver,
+    Constructor,
+    DisposableResolver,
+    Lifetime,
+    asClass,
+    createContainer, asValue,
+} from 'awilix';
 import { Dependencies } from './infrastructure/dependencies';
 import { TicketRepository } from './infrastructure/repositories/ticket-handler-repository';
+import { ServerFactory } from './infrastructure/server-factory';
+import { RegistrationMap } from './infrastructure/dependency-injection';
 
-let container: AwilixContainer<Dependencies>;
+let container: AwilixContainer;
 
 export function getMainContainer() {
     if (!container) {
@@ -10,7 +20,9 @@ export function getMainContainer() {
 
         container.register({
             ticketHandlerRepository: asSingletonClass(TicketRepository),
-        });
+            serverFactory: asSingletonClass(ServerFactory),
+            socketServer: asValue(null),
+        } as RegistrationMap<Dependencies>);
     }
 
     return container;
