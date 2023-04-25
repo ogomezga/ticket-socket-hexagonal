@@ -25,7 +25,8 @@ export class TicketRepository implements TicketHandlerRepositoryInterface {
     }
 
     public readCurrentTicketHandlerInformation(): TicketHandlerInfo {
-        return JSON.parse(JSON.stringify(fs.readFileSync(DB_PATH, 'utf8')));
+        const data = fs.readFileSync(DB_PATH, 'utf8');
+        return new TicketHandlerInfo(JSON.parse(data));
     }
 
     private init(): void {
