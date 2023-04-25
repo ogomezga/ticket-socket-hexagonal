@@ -16,7 +16,7 @@ socket.on('disconnect', () => {                 // Desconnection event
 
 socket.on('ultimo-ticket', ( ticket ) => {
     // console.log( ticket );
-    lblNuevoTicket.innerText = 'Ticket ' + ticket;
+    lblNuevoTicket.innerText = 'Ticket ' + ticket.numb;
 });
 
 btnCrear.addEventListener( 'click', () => {

@@ -52,7 +52,7 @@ btnAtenderTicket.addEventListener( 'click', () => {
         }
         
         lblPendientes.innerText = Number( lblPendientes.innerText ) - 1; 
-        lblTicket.innerText = 'Ticket ' + ticket.numero;
+        lblTicket.innerText = 'Ticket ' + ticket.numb;
     });
 
 });
