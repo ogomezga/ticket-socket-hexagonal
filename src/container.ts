@@ -5,7 +5,7 @@ import {
     DisposableResolver,
     Lifetime,
     asClass,
-    createContainer, asValue,
+    createContainer,
 } from 'awilix';
 import { Dependencies } from './infrastructure/dependencies';
 import { TicketRepository } from './infrastructure/repositories/ticket-handler-repository';
