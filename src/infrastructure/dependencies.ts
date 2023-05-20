@@ -5,12 +5,10 @@ import {HandleTicketListener} from './listeners/handle-ticket-listener';
 import {PendingTicketsEmitter} from './emitters/pending-tickets-emitter';
 import {LastFourHandleTicketsEmitter} from './emitters/last-four-handle-tickets-emitter';
 import {LastTicketEmitter} from './emitters/last-ticket-emitter';
-import { Server } from 'socket.io';
 import {SocketClient} from './socket-client';
 
 type ServerDependencies = {
     serverFactory: ServerFactory;
-    socketServer: Server;
 };
 
 export type InfrastructureDependencies = {
