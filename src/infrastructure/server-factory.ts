@@ -1,11 +1,7 @@
 import express from 'express';
 import {Server as SocketServer, Socket} from 'socket.io';
 import { Server, createServer } from 'http';
-import {RegistrationMap, resolveDependency} from './dependency-injection';
-import {getMainContainer} from '../container';
-import {asValue} from 'awilix';
-import {Dependencies } from './dependencies';
-import {getInfrastructureContainer} from './container';
+import {resolveDependency} from './dependency-injection';
 
 export class ServerFactory {
     private port: string;
@@ -31,22 +27,16 @@ export class ServerFactory {
     }
 
     public onSocketConnection(): void {
+        const lastTicketEmitter = resolveDependency('lastTicketEmitter');
+        const pendingTicketsEmitter = resolveDependency('pendingTicketsEmitter');
+        const lastFourHandleTicketsEmitter = resolveDependency('lastFourHandleTicketsEmitter');
+        const newTicketListener = resolveDependency('newTicketListener');
+        const handleTicketListener = resolveDependency('handleTicketListener');
+        const socketClient = resolveDependency('socketClient');
 
-        getMainContainer().register({
-            socketServer: asValue(this.socketServer),
-        } as RegistrationMap<Dependencies>);
-
-        getMainContainer().register(
-            getInfrastructureContainer().registrations,
-        );
+        socketClient.registerSocketServer(this.socketServer);
 
         this.socketServer.on('connection', (socket: Socket) => {
-            const lastTicketEmitter = resolveDependency('lastTicketEmitter');
-            const pendingTicketsEmitter = resolveDependency('pendingTicketsEmitter');
-            const lastFourHandleTicketsEmitter = resolveDependency('lastFourHandleTicketsEmitter');
-            const newTicketListener = resolveDependency('newTicketListener');
-            const handleTicketListener = resolveDependency('handleTicketListener');
-
             socket.on('siguiente-ticket', (payload, callback) => {
                 newTicketListener.execute(callback);
             });
