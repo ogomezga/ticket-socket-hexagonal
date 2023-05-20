@@ -17,6 +17,6 @@ export class NewTicketListener {
         callback(addNewTicket.addNewTicket());
 
         const ticketHandlerInfo: TicketHandlerInfo = this.ticketHandlerRepository.readCurrentTicketHandlerInformation();
-        this.socketClient.broadcast({ eventName: 'cola-ticket', payload: ticketHandlerInfo.tickets.length });
+        this.socketClient.emit({ eventName: 'cola-ticket', payload: ticketHandlerInfo.tickets.length });
     }
 }

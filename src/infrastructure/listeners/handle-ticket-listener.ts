@@ -23,8 +23,8 @@ export class HandleTicketListener {
         const ticket = assingTicket.execute( escritorio );
 
         const ticketHandlerInfo = this.ticketHandlerRepository.readCurrentTicketHandlerInformation();
-        this.socketClient.broadcast({ eventName: 'ultimos-ticket', payload: ticketHandlerInfo.lastFourTickets });
-        this.socketClient.broadcast({ eventName: 'cola-ticket', payload: ticketHandlerInfo.tickets.length });
+        this.socketClient.emit({ eventName: 'ultimos-ticket', payload: ticketHandlerInfo.lastFourTickets });
+        this.socketClient.emit({ eventName: 'cola-ticket', payload: ticketHandlerInfo.tickets.length });
         if ( !ticket ) {
             callback({
                 ok: false,
