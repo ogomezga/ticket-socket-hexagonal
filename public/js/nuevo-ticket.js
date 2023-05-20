@@ -4,25 +4,22 @@ const btnCrear       = document.querySelector( '#btnCrear' );
 
 const socket = io();
 
-socket.on('connect', () => {                    // Connection event
-    // console.log('Conectado');
+socket.on('connect', () => {
     btnCrear.disabled = false;
 });
 
-socket.on('disconnect', () => {                 // Desconnection event
-    // console.log('Des-conectado');
+socket.on('disconnect', () => {
     btnCrear.disabled = true;
 });
 
-socket.on('ultimo-ticket', ( ticket ) => {
-    // console.log( ticket );
-    lblNuevoTicket.innerText = 'Ticket ' + ticket.numb;
+socket.on('ultimo-ticket', ( lastTicket ) => {
+    lblNuevoTicket.innerText = 'Ticket ' + lastTicket;
 });
 
 btnCrear.addEventListener( 'click', () => {
     
     socket.emit('siguiente-ticket', null, ( ticket ) => {
-        lblNuevoTicket.innerText = ticket;
+        lblNuevoTicket.innerText =  'Ticket ' + ticket.numb;
     });
 
 });

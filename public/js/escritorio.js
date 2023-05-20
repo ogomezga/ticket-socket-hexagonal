@@ -22,13 +22,11 @@ divAlerta.style.display     = 'none';
 
 const socket = io();
 
-socket.on('connect', () => {                    // Connection event
-    // console.log('Conectado');
+socket.on('connect', () => {
     btnAtenderTicket.disabled = false;
 });
 
-socket.on('disconnect', () => {                 // Desconnection event
-    // console.log('Des-conectado');
+socket.on('disconnect', () => {
     btnAtenderTicket.disabled = true;
 });
 
@@ -41,8 +39,9 @@ socket.on('cola-ticket', ( payload ) => {
 
     divAlerta.style.display = '';
 });
-
 btnAtenderTicket.addEventListener( 'click', () => {
+
+    let pendientes = Number(lblPendientes.innerText);
     
     socket.emit('atender-ticket', { escritorio }, ( { ok, ticket, msg} ) => {
         if ( !ok ) {
@@ -50,8 +49,12 @@ btnAtenderTicket.addEventListener( 'click', () => {
             lblPendientes.style.display = 'none';
             return divAlerta.style.display = '';
         }
+
+        if (pendientes > 0) {
+            pendientes--;
+        }
         
-        lblPendientes.innerText = Number( lblPendientes.innerText ) - 1; 
+        lblPendientes.innerText = pendientes;
         lblTicket.innerText = 'Ticket ' + ticket.numb;
     });
 

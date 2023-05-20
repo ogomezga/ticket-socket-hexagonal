@@ -14,28 +14,31 @@ socket.on('ultimos-ticket', ( ultimos4 ) => {                    // Connection e
     if ( ultimos4 ) {
 
         const audio = new Audio('../audio/new-ticket.mp3');
-        audio.play();
+        audio.play().then(() => {})
+        .catch(error => {
+            console.error('Error al reproducir el audio:', error);
+        });
         
         ultimos4.forEach( (ticket, i) => {
             switch (i) {
                 case 0:
-                    lblTicket1.innerText = 'Ticket ' + ticket.numero;
-                    lblEscritorio1.innerText = ticket.escritorio;
+                    lblTicket1.innerText = 'Ticket ' + ticket.numb;
+                    lblEscritorio1.innerText = ticket.desk;
                     break;
 
                 case 1:
-                    lblTicket2.innerText = 'Ticket ' + ticket.numero;
-                    lblEscritorio2.innerText = ticket.escritorio;
+                    lblTicket2.innerText = 'Ticket ' + ticket.numb;
+                    lblEscritorio2.innerText = ticket.desk;
                     break;
 
                 case 2:
-                    lblTicket3.innerText = 'Ticket ' + ticket.numero;
-                    lblEscritorio3.innerText = ticket.escritorio;
+                    lblTicket3.innerText = 'Ticket ' + ticket.numb;
+                    lblEscritorio3.innerText = ticket.desk;
                     break;
 
                 case 3:
-                    lblTicket4.innerText = 'Ticket ' + ticket.numero;
-                    lblEscritorio4.innerText = ticket.escritorio;
+                    lblTicket4.innerText = 'Ticket ' + ticket.numb;
+                    lblEscritorio4.innerText = ticket.desk;
                     break;
             
                 default:
