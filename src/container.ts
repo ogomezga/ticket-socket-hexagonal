@@ -11,6 +11,7 @@ import { Dependencies } from './infrastructure/dependencies';
 import { TicketRepository } from './infrastructure/repositories/ticket-handler-repository';
 import { ServerFactory } from './infrastructure/server-factory';
 import { RegistrationMap } from './infrastructure/dependency-injection';
+import {getInfrastructureContainer} from './infrastructure/container';
 
 let container: AwilixContainer;
 
@@ -21,8 +22,11 @@ export function getMainContainer() {
         container.register({
             ticketHandlerRepository: asSingletonClass(TicketRepository),
             serverFactory: asSingletonClass(ServerFactory),
-            socketServer: asValue(null),
         } as RegistrationMap<Dependencies>);
+
+        container.register(
+            getInfrastructureContainer().registrations,
+        );
     }
 
     return container;
