@@ -1,6 +1,7 @@
 import { TicketHandlerInfo } from '../../../domain/models/ticket-handler-info';
 import { TicketRepository } from '../../../infrastructure/repositories/ticket-handler-repository';
 import fs from 'fs';
+import path from 'path';
 
 jest.mock('fs');
 
@@ -12,16 +13,19 @@ describe('Test suite for the ticket handler repository', () => {
         }) as unknown as Date);
     }
 
-    const dbConnectionPath = 'D:\\Developer\\ProyectosNode\\ticket-socket-hexagonal\\db\\data.json';
+    const fileName = 'data.json';
+    console.log(__dirname);
+    const routeProjectRoot = path.join(__dirname, '..', '..', '..', '..');
+    const dbConnectionPath = path.join(routeProjectRoot, 'db', fileName);
 
     beforeEach(() => {
         fs.writeFileSync = jest.fn();
-        fs.readFileSync = jest.fn().mockImplementation(() => ({
+        fs.readFileSync = jest.fn().mockImplementation(() => (JSON.stringify({
             latestTicket: 0,
             today: 13,
             tickets: [],
             lastFourTickets: [],
-        }));
+        })));
     });
 
     describe('Givena  request to init the repository', () => {
@@ -47,12 +51,12 @@ describe('Test suite for the ticket handler repository', () => {
         it('Should start the repository from scratch as it is a new day', () => {
             // Given
             mockDate(20);
-            fs.readFileSync = jest.fn().mockImplementation(() => ({
+            fs.readFileSync = jest.fn().mockImplementation(() => (JSON.stringify({
                 latestTicket: 0,
                 today: 13,
                 tickets: [],
                 lastFourTickets: [],
-            }));
+            })));
 
             // When
             new TicketRepository();
