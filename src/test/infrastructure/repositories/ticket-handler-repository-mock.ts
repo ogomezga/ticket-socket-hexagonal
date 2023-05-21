@@ -5,7 +5,7 @@ import path from 'path';
 export class TicketHandlerRepositoryMock implements TicketHandlerRepositoryInterface {
     private readonly writeFileSyncMock = jest.fn();
     private readonly readFileSyncMock = jest.fn();
-    private readonly dbPath = path.join(__dirname, '../../../db/data.json');
+    private readonly dbPath = path.join(__dirname, '../../../../db/data.json');
     private readonly encoding = 'utf8';
     private ticketHandlerInfo: TicketHandlerInfo = {} as TicketHandlerInfo;
 
@@ -26,10 +26,7 @@ export class TicketHandlerRepositoryMock implements TicketHandlerRepositoryInter
         expect(this.writeFileSyncMock).toHaveBeenNthCalledWith(times, this.dbPath, JSON.stringify( ticketHandlerInfo ));
     }
 
-    assertReadCurrentTicketHandlerInformationHaveBeenCalledTimes(times: number): void {
-        expect(this.readFileSyncMock).toHaveBeenCalledTimes(times);
-    }
-    assertReadCurrentTicketHandlerInformationHaveBeenCalledWith(times: number): void {
+    assertReadCurrentTicketHandlerInformationHaveBeenNthCalledWith(times: number): void {
         expect(this.readFileSyncMock).toHaveBeenNthCalledWith(times, this.dbPath, this.encoding);
     }
 
