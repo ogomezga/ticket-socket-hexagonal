@@ -94,7 +94,7 @@ describe('HandleTicketListener Suite test', () => {
             socketClientMock.assertEmitHaveBeenCalledWith(2, expectedArgs);
         });
 
-        it('should do something', () => {
+        it('should return error on the callback due to there is not pending tickets available', () => {
             // Given
             ticketHandlerRepositoryMock.mockTicketHandlerInfo(new TicketHandlerInfo({
                 latestTicket: 1,
