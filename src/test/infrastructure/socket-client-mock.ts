@@ -13,6 +13,6 @@ export class SocketClientMock implements SocketClientInterface {
     }
 
     assertEmitHaveBeenCalledWith ( times: number, args: { eventName: string; payload: Ticket | Ticket[] | number } ) {
-        expect(this.socketServer).toHaveBeenNthCalledWith(times, args);
+        expect(this.socketServer).toHaveBeenNthCalledWith(times, args.eventName, args.payload);
     }
 }
