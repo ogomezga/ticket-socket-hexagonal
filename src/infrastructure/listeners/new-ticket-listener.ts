@@ -1,13 +1,13 @@
 import {AddNewTicket} from '../../domain/usecases/add-new-ticket';
 import TicketHandlerRepositoryInterface from '../../domain/repositories/ticket-handler-repository-interface';
 import {TicketHandlerInfo} from '../../domain/models/ticket-handler-info';
-import {SocketClient} from '../socket-client';
+import SocketClientInterface from '../../domain/socket-client-interface';
 
 export class NewTicketListener {
-    private readonly socketClient: SocketClient;
+    private readonly socketClient: SocketClientInterface;
     private readonly ticketHandlerRepository: TicketHandlerRepositoryInterface;
 
-    constructor({ socketClient, ticketHandlerRepository }:{ socketClient: SocketClient; ticketHandlerRepository: TicketHandlerRepositoryInterface }) {
+    constructor({ socketClient, ticketHandlerRepository }:{ socketClient: SocketClientInterface; ticketHandlerRepository: TicketHandlerRepositoryInterface }) {
         this.socketClient = socketClient;
         this.ticketHandlerRepository = ticketHandlerRepository;
     }
