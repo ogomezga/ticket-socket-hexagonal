@@ -14,7 +14,6 @@ describe('Test suite for the ticket handler repository', () => {
     }
 
     const fileName = 'data.json';
-    console.log(__dirname);
     const routeProjectRoot = path.join(__dirname, '..', '..', '..', '..');
     const dbConnectionPath = path.join(routeProjectRoot, 'db', fileName);
 
