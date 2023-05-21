@@ -1,7 +1,8 @@
 import {Server} from 'socket.io';
 import {Ticket} from '../domain/models/ticket';
+import SocketClientInterface from '../domain/socket-client-interface';
 
-export class SocketClient {
+export class SocketClient implements SocketClientInterface{
     private socketServer: Server;
 
     registerSocketServer(socketServer: Server): void {
