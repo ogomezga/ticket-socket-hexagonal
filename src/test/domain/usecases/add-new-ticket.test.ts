@@ -1,13 +1,16 @@
 import { Ticket } from '../../../domain/models/ticket';
 import { AddNewTicket } from '../../../domain/usecases/add-new-ticket';
-import { TicketRepositoryMock } from '../../helpers/ticket-handler-repository-mock';
 import { TicketHandlerInfo } from '../../../domain/models/ticket-handler-info';
+import {TicketHandlerRepositoryMock} from '../../infrastructure/repositories/ticket-handler-repository-mock';
 
 describe('Add new ticket test suite', () => {
-    test('AddNewTicket must be a class that can be instantiated', () => {
-        // Given
-        const ticketRepository = new TicketRepositoryMock();
+    const ticketRepository = new TicketHandlerRepositoryMock();
 
+    beforeEach(() => {
+        ticketRepository.reset();
+    });
+
+    test('AddNewTicket must be a class that can be instantiated', () => {
         // When
         const addNewTicket = new AddNewTicket(ticketRepository);
 
@@ -17,7 +20,12 @@ describe('Add new ticket test suite', () => {
 
     test('Given a request to add a new ticket into the system, it must be created correctly', () => {
         // Given
-        const ticketRepository = new TicketRepositoryMock();
+        ticketRepository.mockTicketHandlerInfo(new TicketHandlerInfo({
+            latestTicket: 0,
+            today: 13,
+            tickets: [],
+            lastFourTickets: [],
+        }));
         const addNewTicket = new AddNewTicket(ticketRepository);
 
         // When
@@ -33,7 +41,6 @@ describe('Add new ticket test suite', () => {
 
     test('Given a request to add a new ticket into the system, it must be added to the repository correctly', () => {
         // Given
-        const ticketRepository = new TicketRepositoryMock();
         ticketRepository.mockTicketHandlerInfo(new TicketHandlerInfo({
             latestTicket: 0,
             today: 13,
@@ -55,6 +62,8 @@ describe('Add new ticket test suite', () => {
             }],
             lastFourTickets: [],
         });
-        ticketRepository.expectSaveHasBeenCalledWith(expectedSavedTicketHandlerInfo);
+        ticketRepository.assertReadCurrentTicketHandlerInformationHaveBeenNthCalledWith(1);
+        ticketRepository.assertSaveCurrentTicketHandlerInformationHavenBeenCalledTimes(1);
+        ticketRepository.assertSaveCurrentTicketHandlerInformationHavenBeenCalledWith({ times: 1, ticketHandlerInfo: expectedSavedTicketHandlerInfo});
     });
 });

@@ -1,16 +1,18 @@
 import { Ticket } from '../../../domain/models/ticket';
 import { TicketHandlerInfo } from '../../../domain/models/ticket-handler-info';
 import { AssignTicket } from '../../../domain/usecases/assign-ticket';
-import { TicketRepositoryMock } from '../../helpers/ticket-handler-repository-mock';
+import {TicketHandlerRepositoryMock} from '../../infrastructure/repositories/ticket-handler-repository-mock';
 
 jest.mock('fs');
 
 describe('Assign Ticket test suite', () => {
+    const ticketRepository = new TicketHandlerRepositoryMock();
+
+    beforeEach(() => {
+        ticketRepository.reset();
+    });
 
     test('AssignTicket must be a class that can be instantiated', () => {
-        // Given
-        const ticketRepository = new TicketRepositoryMock();
-
         // When
         const assignTicket = new AssignTicket(ticketRepository);
 
@@ -20,7 +22,6 @@ describe('Assign Ticket test suite', () => {
 
     test('Given a request to assign a ticket, it must be assigned to a desk correctly', () => {
         // Given
-        const ticketRepository = new TicketRepositoryMock();
         ticketRepository.mockTicketHandlerInfo(new TicketHandlerInfo({
             latestTicket: 1,
             today: 13,
@@ -45,7 +46,12 @@ describe('Assign Ticket test suite', () => {
 
     test('Given a request to assign a ticket, If there are no tickets to attend it must return null', () => {
         // Given
-        const ticketRepository = new TicketRepositoryMock();
+        ticketRepository.mockTicketHandlerInfo(new TicketHandlerInfo({
+            latestTicket: 1,
+            today: 13,
+            tickets: [],
+            lastFourTickets: [],
+        }));
         const assignTicket = new AssignTicket(ticketRepository);
 
         // When
@@ -57,7 +63,6 @@ describe('Assign Ticket test suite', () => {
 
     test('Given a request to assign a ticket, it must be assigned and added to the repository correctly', () => {
         // Given
-        const ticketRepository = new TicketRepositoryMock();
         ticketRepository.mockTicketHandlerInfo(new TicketHandlerInfo({
             latestTicket: 1,
             today: 13,
@@ -83,12 +88,13 @@ describe('Assign Ticket test suite', () => {
             tickets: [],
             lastFourTickets: [ticket],
         });
-        ticketRepository.expectSaveHasBeenCalledWith(expectedSavedTicketHandlerInfo);
+        ticketRepository.assertReadCurrentTicketHandlerInformationHaveBeenNthCalledWith(1);
+        ticketRepository.assertSaveCurrentTicketHandlerInformationHavenBeenCalledTimes(1);
+        ticketRepository.assertSaveCurrentTicketHandlerInformationHavenBeenCalledWith({ times: 1, ticketHandlerInfo: expectedSavedTicketHandlerInfo});
     });
 
     test('Given a request to assign a ticket, it already exists tickets have been attended it must be refreshed the list correctly', () => {
         // Given
-        const ticketRepository = new TicketRepositoryMock();
         ticketRepository.mockTicketHandlerInfo(new TicketHandlerInfo({
             latestTicket: 5,
             today: 13,
@@ -144,6 +150,8 @@ describe('Assign Ticket test suite', () => {
                 },
             ],
         });
-        ticketRepository.expectSaveHasBeenCalledWith(expectedSavedTicketHandlerInfo);
+        ticketRepository.assertReadCurrentTicketHandlerInformationHaveBeenNthCalledWith(1);
+        ticketRepository.assertSaveCurrentTicketHandlerInformationHavenBeenCalledTimes(1);
+        ticketRepository.assertSaveCurrentTicketHandlerInformationHavenBeenCalledWith({ times: 1, ticketHandlerInfo: expectedSavedTicketHandlerInfo});
     });
 });
